@@ -10,10 +10,15 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import static java.lang.System.exit;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Stream;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -339,28 +344,24 @@ public class FormSolver extends javax.swing.JFrame {
                 
 
         }
-        private void changeFont ( Font font )
-        {
-            Component component = jPanel1;
-            component.setFont ( font );
-            if ( component instanceof Container )
-            {
-                for ( Component childs : ( ( Container ) component ).getComponents () )
-                {
-                 childs.setFont(font);
-                }
-            }
-            component = jMenuBar1;
-            component.setFont ( font );
-            if ( component instanceof Container )
-            {
-                for ( Component childs : ( ( Container ) component ).getComponents () )
-                {
-                 childs.setFont(font);
-                }
-            }
-        }
+    
+        
     }
+    
+    public void changeFont (Font font){
+            List<Component> comp = new ArrayList();
+            Collections.addAll(comp, jMenuBar1.getComponents());
+            Collections.addAll(comp, jMenuItem1.getComponents());
+            Collections.addAll(comp, jMenuItem2.getComponents());
+            Collections.addAll(comp, jMenuItem3.getComponents());
+            Collections.addAll(comp, jPanel1.getComponents());
+            comp.add(jColorChooser1);
+
+            
+            for(Component _comp : comp){
+                _comp.setFont(font);
+            }
+        } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JColorChooser jColorChooser1;
