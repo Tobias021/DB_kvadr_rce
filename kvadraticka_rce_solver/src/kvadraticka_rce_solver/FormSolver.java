@@ -6,19 +6,16 @@ package kvadraticka_rce_solver;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import static java.lang.System.exit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 /**
  *
@@ -26,6 +23,7 @@ import javax.swing.UIManager;
  */
 public class FormSolver extends javax.swing.JFrame {
     private final Graphics GRAFIKA;
+    
     /**
      * Creates new form FormSolver
      */
@@ -53,6 +51,9 @@ public class FormSolver extends javax.swing.JFrame {
         lbl_x = new javax.swing.JLabel();
         lbl_y = new javax.swing.JLabel();
         lbl_z = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        lbl_diskriminant = new javax.swing.JLabel();
+        lbl_reseni = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -60,6 +61,7 @@ public class FormSolver extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -84,6 +86,7 @@ public class FormSolver extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        txf_x.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txf_x.setActionCommand("<Not Set>");
         txf_x.setName(""); // NOI18N
         txf_x.setNextFocusableComponent(txf_y);
@@ -106,6 +109,7 @@ public class FormSolver extends javax.swing.JFrame {
             }
         });
 
+        txf_y.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txf_y.setNextFocusableComponent(txf_z);
         txf_y.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -121,12 +125,18 @@ public class FormSolver extends javax.swing.JFrame {
             }
         });
 
+        txf_z.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txf_z.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txf_zFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txf_zFocusLost(evt);
+            }
+        });
+        txf_z.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txf_zActionPerformed(evt);
             }
         });
 
@@ -136,24 +146,33 @@ public class FormSolver extends javax.swing.JFrame {
 
         lbl_z.setText("z:");
 
+        jButton1.setAction(countAction);
+        jButton1.setText("Spočítej");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(lbl_x)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txf_x, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_y)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txf_y, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_z)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txf_z, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_reseni)
+                    .addComponent(lbl_diskriminant)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lbl_x)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txf_x, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_y)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txf_y, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_z)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txf_z, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,8 +184,13 @@ public class FormSolver extends javax.swing.JFrame {
                     .addComponent(txf_z, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_x)
                     .addComponent(lbl_y)
-                    .addComponent(lbl_z))
-                .addContainerGap(155, Short.MAX_VALUE))
+                    .addComponent(lbl_z)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbl_diskriminant)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbl_reseni)
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         jMenu1.setAction(exitAction);
@@ -176,11 +200,6 @@ public class FormSolver extends javax.swing.JFrame {
 
         jMenuItem2.setAction(exitAction);
         jMenuItem2.setText("Ukončit");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -193,16 +212,20 @@ public class FormSolver extends javax.swing.JFrame {
 
         jMenuItem3.setAction(fontAction);
         jMenuItem3.setText("Změna fontu");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
         jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Nápověda");
+
+        jMenuItem4.setText("O aplikaci");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem4);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -225,12 +248,9 @@ public class FormSolver extends javax.swing.JFrame {
         exitAction = new ExitAction();
         backgroundColorAction = new BackgroundColorAction();
         fontAction = new FontAction();
+        countAction = new CountAction();
     }
     
-    private void txf_xActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txf_xActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txf_xActionPerformed
-
     private void txf_xFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txf_xFocusGained
         // TODO add your handling code here:
         GRAFIKA.hasFocus(txf_x);
@@ -261,10 +281,6 @@ public class FormSolver extends javax.swing.JFrame {
         GRAFIKA.noFocus(txf_z);        
     }//GEN-LAST:event_txf_zFocusLost
 
-    private void txf_yActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txf_yActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txf_yActionPerformed
-
     private void txf_xKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_xKeyPressed
         // TODO add your handling code here:
         if(evt.isActionKey()){
@@ -272,13 +288,25 @@ public class FormSolver extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txf_xKeyPressed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+        JOptionPane.showMessageDialog(rootPane, "Projekt na předmět Databáze.\nTobiáš Tláskal");
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void txf_xActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txf_xActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+        txf_y.requestFocusInWindow();
+    }//GEN-LAST:event_txf_xActionPerformed
+
+    private void txf_yActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txf_yActionPerformed
+        // TODO add your handling code here:
+        txf_z.requestFocusInWindow();
+    }//GEN-LAST:event_txf_yActionPerformed
+
+    private void txf_zActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txf_zActionPerformed
+        // TODO add your handling code here:
+        jButton1.requestFocusInWindow();
+    }//GEN-LAST:event_txf_zActionPerformed
 
     /**
      * @param args the command line arguments
@@ -302,7 +330,6 @@ public class FormSolver extends javax.swing.JFrame {
         //</editor-fold>
         
         //</editor-fold>
-        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
@@ -311,7 +338,6 @@ public class FormSolver extends javax.swing.JFrame {
     }
     
     class ExitAction extends AbstractAction {
-
         @Override
         public void actionPerformed(ActionEvent ae) {
             if(JOptionPane.YES_OPTION == 
@@ -322,7 +348,6 @@ public class FormSolver extends javax.swing.JFrame {
     }
     
     class BackgroundColorAction extends AbstractAction{
-
         @Override
         public void actionPerformed(ActionEvent ae) {
             Color color = JColorChooser.showDialog(rootPane, "Vyberte barvu pozadí", GRAFIKA.getDefaultBackground(rootPane));
@@ -331,7 +356,6 @@ public class FormSolver extends javax.swing.JFrame {
     }
     
     class FontAction extends AbstractAction{
-
         @Override
         public void actionPerformed(ActionEvent ae) {
                JFontChooser fontChooser = new JFontChooser();
@@ -341,22 +365,48 @@ public class FormSolver extends javax.swing.JFrame {
                     Font font = fontChooser.getSelectedFont(); 
                     changeFont(font); 
                }
-                
-
         }
+    }
     
-        
+    class CountAction extends AbstractAction{
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            QuadSolution solution = new QuadSolution(
+                    Double.parseDouble(txf_x.getValue().toString()),
+                    Double.parseDouble(txf_y.getValue().toString()),
+                    Double.parseDouble(txf_z.getValue().toString())
+            );
+            double[] vysledek = solution.get();
+            double diskriminant = solution.getDiskriminant();
+            
+            if(vysledek != null){
+                switch(vysledek.length){
+                case 1:
+                    lbl_diskriminant.setText(String.valueOf(diskriminant));
+                    lbl_reseni.setText("X = ".concat(String.valueOf(vysledek[0])));
+                    break;
+                case 2:
+                    lbl_diskriminant.setText(String.valueOf(diskriminant));
+                    lbl_reseni.setText("X = ".concat(String.valueOf(vysledek[0])).concat(" Y = ").concat(String.valueOf(vysledek[1])));
+                    break;
+                }
+            }else{
+                lbl_diskriminant.setText(String.valueOf(diskriminant));
+                lbl_reseni.setText("Zadaná rovnice nemá řešení v oborureálných čísel.");
+        }
+            
+        }
     }
     
     public void changeFont (Font font){
             List<Component> comp = new ArrayList();
             Collections.addAll(comp, jMenuBar1.getComponents());
-            Collections.addAll(comp, jMenuItem1.getComponents());
-            Collections.addAll(comp, jMenuItem2.getComponents());
-            Collections.addAll(comp, jMenuItem3.getComponents());
             Collections.addAll(comp, jPanel1.getComponents());
+            comp.add(jMenuItem1);
+            comp.add(jMenuItem2);
+            comp.add(jMenuItem3);
             comp.add(jColorChooser1);
-
             
             for(Component _comp : comp){
                 _comp.setFont(font);
@@ -364,6 +414,7 @@ public class FormSolver extends javax.swing.JFrame {
         } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JMenu jMenu1;
@@ -373,7 +424,10 @@ public class FormSolver extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lbl_diskriminant;
+    private javax.swing.JLabel lbl_reseni;
     private javax.swing.JLabel lbl_x;
     private javax.swing.JLabel lbl_y;
     private javax.swing.JLabel lbl_z;
@@ -385,4 +439,5 @@ public class FormSolver extends javax.swing.JFrame {
     private Action exitAction;
     private Action backgroundColorAction;
     private Action fontAction;
+    private Action countAction;
 }
