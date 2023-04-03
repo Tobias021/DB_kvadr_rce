@@ -103,11 +103,6 @@ public class FormSolver extends javax.swing.JFrame {
                 txf_xActionPerformed(evt);
             }
         });
-        txf_x.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txf_xKeyPressed(evt);
-            }
-        });
 
         txf_y.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         txf_y.setNextFocusableComponent(txf_z);
@@ -256,11 +251,6 @@ public class FormSolver extends javax.swing.JFrame {
         GRAFIKA.hasFocus(txf_x);
     }//GEN-LAST:event_txf_xFocusGained
 
-    private void txf_xFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txf_xFocusLost
-        // TODO add your handling code here:
-        GRAFIKA.noFocus(txf_x);
-    }//GEN-LAST:event_txf_xFocusLost
-
     private void txf_yFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txf_yFocusGained
         // TODO add your handling code here:
         GRAFIKA.hasFocus(txf_y);
@@ -281,13 +271,6 @@ public class FormSolver extends javax.swing.JFrame {
         GRAFIKA.noFocus(txf_z);        
     }//GEN-LAST:event_txf_zFocusLost
 
-    private void txf_xKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_xKeyPressed
-        // TODO add your handling code here:
-        if(evt.isActionKey()){
-            
-        }
-    }//GEN-LAST:event_txf_xKeyPressed
-
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(rootPane, "Projekt na předmět Databáze.\nTobiáš Tláskal");
@@ -295,18 +278,27 @@ public class FormSolver extends javax.swing.JFrame {
 
     private void txf_xActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txf_xActionPerformed
         // TODO add your handling code here:
-        txf_y.requestFocusInWindow();
+        txf_y.requestFocus();
+        txf_y.selectAll();
     }//GEN-LAST:event_txf_xActionPerformed
 
     private void txf_yActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txf_yActionPerformed
         // TODO add your handling code here:
-        txf_z.requestFocusInWindow();
+        txf_z.requestFocus();
+        txf_z.selectAll();
+
     }//GEN-LAST:event_txf_yActionPerformed
 
     private void txf_zActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txf_zActionPerformed
         // TODO add your handling code here:
         jButton1.requestFocusInWindow();
     }//GEN-LAST:event_txf_zActionPerformed
+
+    private void txf_xFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txf_xFocusLost
+        // TODO add your handling code here:
+        GRAFIKA.noFocus(txf_x);        
+
+    }//GEN-LAST:event_txf_xFocusLost
 
     /**
      * @param args the command line arguments
@@ -383,17 +375,17 @@ public class FormSolver extends javax.swing.JFrame {
             if(vysledek != null){
                 switch(vysledek.length){
                 case 1:
-                    lbl_diskriminant.setText(String.valueOf(diskriminant));
+                    lbl_diskriminant.setText("Diskriminant: ".concat(String.valueOf(diskriminant)));
                     lbl_reseni.setText("X = ".concat(String.valueOf(vysledek[0])));
                     break;
                 case 2:
-                    lbl_diskriminant.setText(String.valueOf(diskriminant));
+                    lbl_diskriminant.setText("Diskriminant: ".concat(String.valueOf(diskriminant)));
                     lbl_reseni.setText("X = ".concat(String.valueOf(vysledek[0])).concat(" Y = ").concat(String.valueOf(vysledek[1])));
                     break;
                 }
             }else{
-                lbl_diskriminant.setText(String.valueOf(diskriminant));
-                lbl_reseni.setText("Zadaná rovnice nemá řešení v oborureálných čísel.");
+                lbl_diskriminant.setText("Diskriminant: ".concat(String.valueOf(diskriminant)));
+                lbl_reseni.setText("Zadaná rovnice nemá řešení v oboru reálných čísel.");
         }
             
         }
